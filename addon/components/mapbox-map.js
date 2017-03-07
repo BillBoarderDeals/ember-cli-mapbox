@@ -9,6 +9,8 @@ export default Ember.Component.extend({
   mapId: null,
 
   setup: Ember.on('didInsertElement', function() {
+    this.$(this.get('divId')).css({ 'opacity': 0 })
+
     Ember.run.scheduleOnce('afterRender', this, function() {
       let map = L.mapbox.map(this.get('divId'), this.get('mapId'));
 
@@ -16,6 +18,8 @@ export default Ember.Component.extend({
         let style = L.mapbox.styleLayer(this.get('style'));
         style.addTo(map);
       }
+
+      this.$(this.get('divId')).css({ 'opacity': '1' });
 
       // Bind Events
       MAP_EVENTS.forEach((event) => {
