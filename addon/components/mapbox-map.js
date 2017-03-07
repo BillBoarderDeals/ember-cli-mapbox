@@ -12,6 +12,11 @@ export default Ember.Component.extend({
     Ember.run.scheduleOnce('afterRender', this, function() {
       let map = L.mapbox.map(this.get('divId'), this.get('mapId'));
 
+      if (this.get('style')) {
+        let style = L.mapbox.styleLayer(this.get('style'));
+        style.addTo(map);
+      }
+
       // Bind Events
       MAP_EVENTS.forEach((event) => {
         map.on(event, (e) => this.sendAction('on' + event, map, e));
